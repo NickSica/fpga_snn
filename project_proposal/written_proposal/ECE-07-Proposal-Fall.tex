@@ -8,27 +8,53 @@
 \usepackage{cite}
 \usepackage{array}
 
-\title{Spiking Neural Network on a FPGA}
+\title{Spiking Neural Network on an FPGA}
 \author{Nicholas Sica, Neel Jagad, Cameron Calv}
 \date{November 21, 2020}
 
 \begin{document}
 \maketitle
-
 \newpage
+\clearpage
+\pagenumbering{arabic}
+
+\being{abstract}
+Individuals of every demographic may be affected by sleep apnea, an affliction causing irregular or halted breathing during periods of sleep. 
+Those afflicted must obtain diagnoses by participating in polysomnography (PSG) lab tests to determine their treatment options. 
+Lab tests use an array of sensors that measure quantities not limited to blood oxygen level, cardiac rhythm signals, brain electrical activity,
+and eye motion \ref{elsevier}. In-lab tests offer the greatest accuracy in exchange for greater cost and the need to relocate patients from
+their preferred resting environments.
+Contrarily, in-home tests require less sensors, correspondingly less cost, and no need for relocation.
+A disadvantage of a portable test is a reduced number of sensors measuring only blood oxygen content and most often airway pressure \ref{elsevier}.
+The reduced sensor count provides fewer measurements and results in less accuracy than the in-lab tests except for the most severe of cases.
+Additionally, the need to return the measuring devices has the potential to delay test results and treatment prescriptions such as a continuous
+positive airway pressure (CPAP) machine.
+Medical professionals and patients alike would benefit most from a solution providing the accuracy of in-lab tests at the cost and comfort of
+in-home tests. 
+
+The proposed solution that aims to reduce the gap between in-lab and in-home sleep study tests implements a spiking neural network (SNN)
+machine learning model on a field-programmable gate array (FPGA). Using this SNN model, impulse-train representations of input signals
+such as blood oxygen level and respiratory pressure are mapped to predictions of future apnea states and their severity.
+The implementation augments the in-home sleep studies to provide real-time monitoring and levels of accuracy not normally characteristic of
+portable tests. The SNN’s ability to encode time-dependent feature characteristics and to conduct asynchronous activation propagation
+in addition to the FPGA’s efficiency for high-frequency switching and rapid re-programmability will facilitate low-power, high-speed operation.
+As opposed to using a more general computational device, such as a graphics processing unit (GPU), the FPGA offers a smaller form factor, and
+at the same time is not as permanent as application-specific integrated circuits (ASICs) which allows for rapid development. SNNs are less complex
+and sparsely connected compared to related long short-term memory (LSTM) recurrent neural networks (RNNs), which makes them feasible to implement
+on power- and memory-constrained devices like the FPGA. 
+
+The project makes extensive use of open-source solutions for most of the development and makes use of a granted Xilinx FPGA board for the physical
+implementation. Python is used to develop the SNN software golden model. Vivado is used to develop the hardware description of the FPGA and
+generate a programmable bitstream. SymbiYosys is used for formal verification of the hardware design. Provided proprietary data as well as openly
+available data from the PhysioNet Apnea-ECG Database is used for determining software accuracy and error \ref{penzel}, \ref{physiobank}. Following
+hardware synthesis, a power test is conducted to determine efficiency of the implemented FPGA solution.
+\end{abstract}
+
+\tableofcontents
 
 \listoffigures
 
 \listoftables
-
-\clearpage
-
-\pagenumbering{arabic}
-
-\being{abstract}
-\end{abstract}
-
-\tableofcontents
 
 \section{Problem Description}
 \subsection{Background}
@@ -46,9 +72,70 @@
 
 \section{Context and Impact}
 \subsection{Economic Analysis}
+The anticipated impact of the FPGA SNN implementation is to bridge the gap between the high-accuracy, high-cost, in-lab PSG tests and the
+low-accuracy, low-cost, in-home sleep studies. The solution must showcase greater accuracy than in-home tests at a cost lower than that of
+in-lab tests. There exist four types of sleep study test with type I tests requiring the largest number of sensors, constant supervision,
+and relocation, and type IV tests allowing for portability and requiring at least one sensor \ref{elsevier}. Recent estimates project that
+type III tests, a single level of complexity above type IV tests, can cost on average about $1,000.00\footnote[1]{This value was first
+adjusted for November 2017 british pound conversion (1 GBP = 1.3478 USD)}\footnote{Rounded up from $991.98 (original price was 736 GBP)},
+which is more than double the price of the $400.00\footnotemark[1]\footnote{Rounded up from $431.30 (original price 320 GBP)} rate for
+type IV tests \ref{chai}. These prices are on par with the expected rates to pay out-of-pocket for tests of these
+levels. The solution must be able to use whatever signals are provided by type III or type IV tests and improve accuracy for all severities
+while incurring no significant costs. 
+
+The greatest cost incurred by the solution remains the FPGA integrated circuit that implements the SNN. The market price for different
+chips can range anywhere from $60 to a chip with a low density of logic elements to $20,000 for a chip with hundreds of thousands of
+logic elements. The most cost effective chip to buy would have to be chosen after the design is made to pick a chip that just barely fits
+the design with a little bit of wiggle room. Software and formal verification utilize open-source technologies, thereby incurring no
+additional price on project development. Additional costs from power consumption are minimal since the implementation respects the
+constraints of a low-power, efficient solution. To prevent additional consequences from hardware integration with present type III or
+type IV tests, the design uses signals already produced from test kits. This avoids the additional costs of more sensors and designates
+the FPGA solution as a near plug-and-play add-on to readily available testing options.
+
 \subsection{Environmental Impact Analysis}
+Unintentional environmental effects because of the project implementation are avoided by considering the potential for lead free circuit
+devices. The FPGA manufacturer, Xilinx designates that the part number XC7VX485T-2FFG1761C of project device corresponds to a RoHS 6/6
+“with Exemption 15” with only enough lead content to ensure proper connection between internal die wire and package pins \ref{xilinx},
+\ref{menon}.  Since the software model is configurable to various hardware constraints, compliant devices that offer further restrictions
+than the device used for development continue to have the potential for drop-in replacement. 
+
 \subsection{Social Impact Analysis}
+Sleep apnea is a condition that affects all demographics without regard for socioeconomic status, and tests providing accurate and reliable
+results should be made available to everyone who may be afflicted. Reducing the financial gap for in-home tests allows for quicker access
+to diagnostics on sleep apnea severity and correspondingly quicker administration for treatment. Out-of-pocket expenses for in-home tests
+are not billed as such unless a patient’s insurance provider preapproves the testing option and subsidizes the total cost for treatment.
+Unfortunately, existing low-cost solutions may not provide the accuracy necessary for insurance coverage thereby gating the option of a
+cheaper test type to those with comprehensive healthcare coverage. Augmenting existing low-cost testing kits with minimal hardware that
+significantly increases prediction accuracy may lead to wider insurance approval and thereby greater accessibility for patients of all
+walks of life. 
+
+Such requirements deemed necessary for test and treatment approval depends on the type of insurance. Federal healthcare determines coverage
+based on reliability and necessity standards dictated by laws on Social Security and confirmed by the U.S. Food and Drug Administration (FDA)
+\ref{steinberg}. Private healthcare institutions provide coverage based on internally decided criteria. The proposed implementation addresses
+such criteria, like those required by the Blue Cross and Blue Shield Association (BCBSA). The BCBSA determines coverage based on how the
+experimental technology satisfies five criteria \ref{steinberg}. Technology must be approved by government authorities, backed up by scientific
+evaluations, positively effective on health, at least as effective as alternative solutions, and expandable beyond its original research setting.
+
+Accuracy tests to be delivered upon project completion address the evidence-based criteria and effectiveness-based criteria of such private
+insurance solutions. Augmenting type III and type IV tests with greater accuracy provides a greater positive effect for affected populations and
+increases effectiveness of already available solutions. Some tests are already portable, and the addition of the small formfactor FPGA, will not
+significantly change a testing kit’s size, thereby preserving the tests portability. Following the results of both accuracy and efficiency tests,
+if the solution deems to be beneficial in all regards, the potential for further approval may be explored. By aiming to satisfy various insurance
+requirements, such concerns as financial availability may be addressed by the implementation allowing for greater accessibility for all social levels. 
+
+
 \subsection{Ethical Analysis}
+Reliability is the greatest concern, as its absence reduces all faith in the project’s design. The implementation must ensure high accuracy,
+minimize false negatives, and minimize false positives. High accuracy results from the proper configuration of the software golden model and the
+accurate implementation of the model and training rules on the FPGA. Multiple verification tests quantify the accuracy of the implementation by
+reporting minimized error metrics such as least mean squares (LMS) error and mean squared error (MSE). A false positive reading corresponds to the
+implementation incorrectly determining the severity of sleep apnea to be more severe than is correctly determined. False positive readings by the
+model are to be avoided because any falsities decrease the viability of the solution and may indicate inconsistent results. A false negative
+reading corresponds to the implementation incorrectly determining the severity of sleep apnea to be less severe than is correctly determined.
+False negative readings may detriment an individual by providing proof for a treatment that insufficiently mitigates the sleep apnea affliction.
+In some cases, these types of decisions may lead to insufficient enough treatment as to have irreversible, detrimental effects on the patient.
+Since a low level of reliability may lead to permanent harm of an otherwise healthy individual, the absolute minimization of all false readings
+is pursued. 
 
 \section{Approach}
 \subsection{CAD/CAM}
@@ -62,15 +149,42 @@
 
 \section{Project Management}
 \subsection{Team Organization}
-\subsection{Schedule and Milestones}
-\subsection{Project Budget}
-\subsection{Success Benchmarks}
+All team members are responsible for the tasks they have volunteered for. Team members choices correspond to the strengths and focus areas that they study.
+Member Cameron Calv who majors in electrical engineering and computer engineering focuses on the formal verification of hardware, software development of
+the testbench, and the implementation efficiency analysis. Member Neel Jagad who majors in computer engineering leads software design implementing the SNN
+golden model and conducting experimental data analysis and feature selection. Member Nick Sica who majors in computer engineering and minors in computer
+science leads hardware designing performing the development of the hardware Verilog for the FPGA, synthesizing the programmable bitstream, and assisting in
+final analysis and verification. The faculty member advising the team is Dr. Anup Das. 
 
-\clearpage
-\section{Conclusion}
+Group tasks will be assigned using a Kanban project management board allowing for accurate planning of deadlines and compartmentalization of responsibilities.
+Code flow including that for software models and hardware descriptions is facilitated using Git version control and code storage on GitHub. 
+
+\subsection{Schedule and Milestones}
+Project progress is conducted in a six-month time frame split up into three academic terms. The initial month of progress determines familiarity with sleep
+apnea datasets and obtaining access authorization for proprietary data once familiarity is established. Following the feature selection from available data
+the software golden model of the SNN is developed as well as the initial architecture layout on the FPGA. Much of the winter season is spent on configuring
+the model and developing the hardware framework. Connection between the hardware and software will be facilitated with a software testbench. Following the
+connection of the hardware and the software, prediction accuracy tests will be conducted to determine how, if at all, the model needs to be tuned. Concluding
+progress are the final efficiency tests for the FPGA implementing the SNN following the synthesis of the hardware bitstream. The following chart showing the
+time dedicated to each design goal and the relative participation of each team member to the goal is provided below.
+
+\subsection{Project Budget}
+The total cost of all materials consists only of the expenses incurred by the hardware design choice. The FPGA provided by Xilinx must be programmed and
+developed upon using the Vivado HLx program which incurs a licensing cost of $3,500. All other technologies used are open-source or publicly licensed databases. 
+
+\subsection{Success Benchmarks}
+Performance metrics such as the MSE and LSM error will give accuracy results from the software and hardware implemented model. Efficiency tests run on the
+hardware give a method of quantifying the total energy cost of the implementation which must remain as low as possible. 
 
 \bibliographystyle{IEEEtran}
 \bibliography{ref}
+
+\clearpage
+\begin{appendices}
+\section{Detailed Project Management}
+\section{Programming Source Code and Drawings}
+\section{Teamwork Contract}
+\end{appendices}
 
 \end{document}
 %%% Local Variables:
