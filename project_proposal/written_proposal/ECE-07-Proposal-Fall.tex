@@ -18,14 +18,14 @@
 \clearpage
 \pagenumbering{arabic}
 
-\being{abstract}
+\begin{abstract}
 Individuals of every demographic may be affected by sleep apnea, an affliction causing irregular or halted breathing during periods of sleep. 
 Those afflicted must obtain diagnoses by participating in polysomnography (PSG) lab tests to determine their treatment options. 
 Lab tests use an array of sensors that measure quantities not limited to blood oxygen level, cardiac rhythm signals, brain electrical activity,
-and eye motion \ref{elsevier}. In-lab tests offer the greatest accuracy in exchange for greater cost and the need to relocate patients from
+and eye motion \cite{elsevier}. In-lab tests offer the greatest accuracy in exchange for greater cost and the need to relocate patients from
 their preferred resting environments.
 Contrarily, in-home tests require less sensors, correspondingly less cost, and no need for relocation.
-A disadvantage of a portable test is a reduced number of sensors measuring only blood oxygen content and most often airway pressure \ref{elsevier}.
+A disadvantage of a portable test is a reduced number of sensors measuring only blood oxygen content and most often airway pressure \cite{elsevier}.
 The reduced sensor count provides fewer measurements and results in less accuracy than the in-lab tests except for the most severe of cases.
 Additionally, the need to return the measuring devices has the potential to delay test results and treatment prescriptions such as a continuous
 positive airway pressure (CPAP) machine.
@@ -46,7 +46,7 @@ on power- and memory-constrained devices like the FPGA.
 The project makes extensive use of open-source solutions for most of the development and makes use of a granted Xilinx FPGA board for the physical
 implementation. Python is used to develop the SNN software golden model. Vivado is used to develop the hardware description of the FPGA and
 generate a programmable bitstream. SymbiYosys is used for formal verification of the hardware design. Provided proprietary data as well as openly
-available data from the PhysioNet Apnea-ECG Database is used for determining software accuracy and error \ref{penzel}, \ref{physiobank}. Following
+available data from the PhysioNet Apnea-ECG Database is used for determining software accuracy and error \cite{penzel}, \cite{physiobank}. Following
 hardware synthesis, a power test is conducted to determine efficiency of the implemented FPGA solution.
 \end{abstract}
 
@@ -62,29 +62,49 @@ hardware synthesis, a power test is conducted to determine efficiency of the imp
 
 \section{Design Description}
 \subsection{Concepts}
+An FPGA is the changeable version of a CPU or GPU. It allows you to create digital logic that can be easily changed and is usually what chip makers
+use to prototype a CPU or GPU before it is turned into an ASIC. A designer can take an FPGA and mold it to fit the criteria of a specific application
+and therefore give speed advantages over a CPU or GPU since it is not general purpose. The downside of the FPGA is that it is very difficult to program
+and changes to it require a lot more time than that of a GPU or CPU. A CPU is great for tasks that happen one after the next but suffers in tasks that
+require parallelization which is where the GPU thrives. Price is a bit tricky with all the devices and will be discussed when the three are compared in
+the next section.
+
 \subsection{Concept Evaluation}
+The type of device to use could make or break the implementation of the neural network. Traditionally CPUs and GPUs were the two main choices due to
+their ease of programming. GPUs were preferred over CPUs because of their highly parallelizable nature. An FPGA allows a designer to custom fit the
+low level logic to work a lot faster since it only has to do one task whereas a CPU or GPU has to support a great number of instructions to be
+multipurpose. If a designer wants even faster speeds, they can turn to designing an ASIC, but that causes the design to be permanent and not easily
+changeable. It is also significantly more difficult to design an ASIC. Price is also a big limiting factor. Since CPUs are typically not great at all
+for neural networks they will not be discussed. High-end GPUs are typically in the range from \$500-\$700 while an FPGA has a price range from \$60 to
+\$10,000. The price usually lands around the \$3,000 mark, although it is hard to say exactly where due to the FPGA being scaled to how many logic elements
+are needed. This may cause you to immediately pick the GPU, but GPU improvements generally cause the consumer to buy new ones sometimes on a yearly basis
+if the improvements are needed. FPGAs, on the other hand, can be reprogrammed on the fly and even incorporate these improvements especially if the top of
+the market chip is being used. It will be relevant and up to date a lot longer than a GPU would be.
+
 \subsection{Detailed Design}
-\begin{figure}[!htb]
-  \centering
-  \includegraphics[width=4in]{}
-  \caption{}\label{fig:}
-\end{figure}
+
+
+%\begin{figure}[!htb]
+%  \centering
+%  \includegraphics[width=4in]{}
+%  \caption{}\label{fig:}
+%\end{figure}
 
 \section{Context and Impact}
 \subsection{Economic Analysis}
 The anticipated impact of the FPGA SNN implementation is to bridge the gap between the high-accuracy, high-cost, in-lab PSG tests and the
 low-accuracy, low-cost, in-home sleep studies. The solution must showcase greater accuracy than in-home tests at a cost lower than that of
 in-lab tests. There exist four types of sleep study test with type I tests requiring the largest number of sensors, constant supervision,
-and relocation, and type IV tests allowing for portability and requiring at least one sensor \ref{elsevier}. Recent estimates project that
-type III tests, a single level of complexity above type IV tests, can cost on average about $1,000.00\footnote[1]{This value was first
-adjusted for November 2017 british pound conversion (1 GBP = 1.3478 USD)}\footnote{Rounded up from $991.98 (original price was 736 GBP)},
-which is more than double the price of the $400.00\footnotemark[1]\footnote{Rounded up from $431.30 (original price 320 GBP)} rate for
-type IV tests \ref{chai}. These prices are on par with the expected rates to pay out-of-pocket for tests of these
+and relocation, and type IV tests allowing for portability and requiring at least one sensor \cite{elsevier}. Recent estimates project that
+type III tests, a single level of complexity above type IV tests, can cost on average about \$1,000.00\footnote[1]{This value was first
+adjusted for November 2017 british pound conversion (1 GBP = 1.3478 USD)}\footnote{Rounded up from \$991.98 (original price was 736 GBP)},
+which is more than double the price of the \$400.00\footnotemark[1]\footnote{Rounded up from \$431.30 (original price 320 GBP)} rate for
+type IV tests \cite{chai}. These prices are on par with the expected rates to pay out-of-pocket for tests of these
 levels. The solution must be able to use whatever signals are provided by type III or type IV tests and improve accuracy for all severities
 while incurring no significant costs. 
 
 The greatest cost incurred by the solution remains the FPGA integrated circuit that implements the SNN. The market price for different
-chips can range anywhere from $60 to a chip with a low density of logic elements to $20,000 for a chip with hundreds of thousands of
+chips can range anywhere from \$60 to a chip with a low density of logic elements to \$10,000 for a chip with hundreds of thousands of
 logic elements. The most cost effective chip to buy would have to be chosen after the design is made to pick a chip that just barely fits
 the design with a little bit of wiggle room. Software and formal verification utilize open-source technologies, thereby incurring no
 additional price on project development. Additional costs from power consumption are minimal since the implementation respects the
@@ -95,8 +115,8 @@ the FPGA solution as a near plug-and-play add-on to readily available testing op
 \subsection{Environmental Impact Analysis}
 Unintentional environmental effects because of the project implementation are avoided by considering the potential for lead free circuit
 devices. The FPGA manufacturer, Xilinx designates that the part number XC7VX485T-2FFG1761C of project device corresponds to a RoHS 6/6
-“with Exemption 15” with only enough lead content to ensure proper connection between internal die wire and package pins \ref{xilinx},
-\ref{menon}.  Since the software model is configurable to various hardware constraints, compliant devices that offer further restrictions
+“with Exemption 15” with only enough lead content to ensure proper connection between internal die wire and package pins \cite{xilinx},
+\cite{menon}.  Since the software model is configurable to various hardware constraints, compliant devices that offer further restrictions
 than the device used for development continue to have the potential for drop-in replacement. 
 
 \subsection{Social Impact Analysis}
@@ -111,9 +131,9 @@ walks of life.
 
 Such requirements deemed necessary for test and treatment approval depends on the type of insurance. Federal healthcare determines coverage
 based on reliability and necessity standards dictated by laws on Social Security and confirmed by the U.S. Food and Drug Administration (FDA)
-\ref{steinberg}. Private healthcare institutions provide coverage based on internally decided criteria. The proposed implementation addresses
+\cite{steinberg}. Private healthcare institutions provide coverage based on internally decided criteria. The proposed implementation addresses
 such criteria, like those required by the Blue Cross and Blue Shield Association (BCBSA). The BCBSA determines coverage based on how the
-experimental technology satisfies five criteria \ref{steinberg}. Technology must be approved by government authorities, backed up by scientific
+experimental technology satisfies five criteria \cite{steinberg}. Technology must be approved by government authorities, backed up by scientific
 evaluations, positively effective on health, at least as effective as alternative solutions, and expandable beyond its original research setting.
 
 Accuracy tests to be delivered upon project completion address the evidence-based criteria and effectiveness-based criteria of such private
@@ -170,7 +190,7 @@ time dedicated to each design goal and the relative participation of each team m
 
 \subsection{Project Budget}
 The total cost of all materials consists only of the expenses incurred by the hardware design choice. The FPGA provided by Xilinx must be programmed and
-developed upon using the Vivado HLx program which incurs a licensing cost of $3,500. All other technologies used are open-source or publicly licensed databases. 
+developed upon using the Vivado HLx program which incurs a licensing cost of \$3,500. All other technologies used are open-source or publicly licensed databases. 
 
 \subsection{Success Benchmarks}
 Performance metrics such as the MSE and LSM error will give accuracy results from the software and hardware implemented model. Efficiency tests run on the
