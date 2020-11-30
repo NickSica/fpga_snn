@@ -112,6 +112,7 @@ INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
+INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT /var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
@@ -141,6 +142,9 @@ INPUT /home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
 INPUT /usr/share/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /home/nick/fpga_ml/project_proposal/written_proposal/figures/gantt.PNG
+INPUT /home/nick/fpga_ml/project_proposal/written_proposal/figures/gantt.PNG
+INPUT /home/nick/fpga_ml/project_proposal/written_proposal/figures/gantt.PNG
 INPUT /home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.aux
 INPUT /home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.out
 INPUT /home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.out
