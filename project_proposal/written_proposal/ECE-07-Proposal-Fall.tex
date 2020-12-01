@@ -110,7 +110,6 @@ which is a measurement of oxygen in the blood. These measurements will be taken 
 However, most of these implementations have been on CPUs and GPUs. Another cornerstone is implementing this onto an FPGA. While there have
 been implementations of FPGAs with sleep apnea in mind, there has been a larger focus on screening and monitoring strictly \cite{ashmouny}.
 
-
 \section{Design Description}
 \subsection{Concepts}
 An FPGA is the changeable version of a CPU or GPU. It allows you to create digital logic that can be easily changed and is usually what chip makers
@@ -176,6 +175,12 @@ nature of an SNN incorporates a more complex temporal component to data processi
 output. This mode of network lends itself to less data points and generating and training time.
 
 \subsection{Detailed Design}
+The initial goal is to perform a deep dive of signal processing and understand the current literature for signal conversions of
+electrocardiogram (ECG) and SpO2 signals since these will be the primary features to analyze. There will be on-going researched-based
+transformations performed on the data to create more features, but this step is pending approval. Collecting all the generated and
+base features, initial analysis will be performed on the features utilizing principal component analysis (PCA) and a high correlation
+filter. These are methods of dimensionality reduction which will help manage the data as well as utilize the more important features.
+
 While the hardware is being created, a golden model will also be designed in software. The golden model is then used to compare against the hardware and
 build up a testbench to make sure the hardware works. The hardware will be built using Verilog with the SystemVerilog synthesis expansions. Verifying lower
 level parts like first in first out buffers will be done using formal verification because it makes the process easier and catches difficult to spot bugs.
@@ -235,7 +240,6 @@ significantly change a testing kit’s size, thereby preserving the tests portab
 if the solution deems to be beneficial in all regards, the potential for further approval may be explored. By aiming to satisfy various insurance
 requirements, such concerns as financial availability may be addressed by the implementation allowing for greater accessibility for all social levels. 
 
-
 \subsection{Ethical Analysis}
 Reliability is the greatest concern, as its absence reduces all faith in the project’s design. The implementation must ensure high accuracy,
 minimize false negatives, and minimize false positives. High accuracy results from the proper configuration of the software golden model and the
@@ -249,22 +253,24 @@ In some cases, these types of decisions may lead to insufficient enough treatmen
 Since a low level of reliability may lead to permanent harm of an otherwise healthy individual, the absolute minimization of all false readings
 is pursued. 
 
-\section{Approach}
-\subsection{CAD/CAM}
-\subsection{Animations}
-\subsection{Simulations}
-\subsection{Numerical Modeling}
-
 \section{Materials/Resources}
 \subsection{Hardware}
 \begin{itemize}
 	\item Xilinx FPGA
-	\item Verilog: Language used to write the hardware for the FPGA
-	\item Xilinx Vivado: Used for programming the FPGA
-	\item SybiYosys: Used for formal verification of the hardware subsystems
-\end{itemize}
-\subsection{Software}
+	\item Verilog - Language used to write the hardware for the FPGA
+	\item Xilinx Vivado - Used for programming the FPGA
+	\item SybiYosys - Used for formal verification of the hardware subsystems
+\end{itemize}	
 
+\subsection{Software}
+\begin{itemize}
+	\item Python - open source programming language with a large community to leverage various libraries
+		\subitem Pandas - Formally structure the data to process efficiently
+		\subitem Numpy - Perform matrix manipulations 
+		\subitem SKLEARN - Utilize base libraries for metrics of machine learning models
+		\subitem Keras - Build neural network layers and the logic for the nodes of the hidden layer
+		\subitem Seaborn - Effectively visualize features, data points, and metrics
+\end{itemize}	
 
 \section{Project Management}
 \subsection{Team Organization}
@@ -301,6 +307,7 @@ hardware give a method of quantifying the total energy cost of the implementatio
 \bibliographystyle{IEEEtran}
 \bibliography{ref}
 
+\newpage
 \begin{appendices}
 \section{Detailed Project Management}
 \begin{table}[!htb]
@@ -309,9 +316,7 @@ hardware give a method of quantifying the total energy cost of the implementatio
 	\includegraphics[width=\linewidth]{gantt.png}
 \end{table}
 %\section{Programming Source Code and Drawings}
-\section{Teamwork Contract}
 \end{appendices}
-
 \end{document}
 
 %\begin{figure}[!htb]
