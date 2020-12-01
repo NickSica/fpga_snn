@@ -15,45 +15,45 @@ Warning--missing publisher in atsjournals
 Warning--empty year in atsjournals
 
 Done.
-You've used 12 entries,
+You've used 14 entries,
             4087 wiz_defined-function locations,
-            905 strings with 10179 characters,
-and the built_in function-call counts, 10067 in all, are:
-= -- 762
-> -- 294
-< -- 89
-+ -- 165
-- -- 54
-* -- 556
-:= -- 1433
-add.period$ -- 23
-call.type$ -- 12
-change.case$ -- 11
-chr.to.int$ -- 204
-cite$ -- 14
-duplicate$ -- 690
-empty$ -- 749
-format.name$ -- 62
-if$ -- 2333
+            919 strings with 10646 characters,
+and the built_in function-call counts, 11719 in all, are:
+= -- 899
+> -- 333
+< -- 102
++ -- 187
+- -- 61
+* -- 633
+:= -- 1668
+add.period$ -- 27
+call.type$ -- 14
+change.case$ -- 13
+chr.to.int$ -- 231
+cite$ -- 16
+duplicate$ -- 813
+empty$ -- 883
+format.name$ -- 71
+if$ -- 2730
 int.to.chr$ -- 0
-int.to.str$ -- 12
-missing$ -- 128
-newline$ -- 67
-num.names$ -- 10
-pop$ -- 323
+int.to.str$ -- 14
+missing$ -- 149
+newline$ -- 73
+num.names$ -- 12
+pop$ -- 371
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 740
+skip$ -- 875
 stack$ -- 0
-substring$ -- 488
-swap$ -- 612
-text.length$ -- 21
+substring$ -- 561
+swap$ -- 713
+text.length$ -- 25
 text.prefix$ -- 0
 top$ -- 5
-type$ -- 12
+type$ -- 14
 warning$ -- 2
-while$ -- 37
-width$ -- 14
-write$ -- 142
+while$ -- 43
+width$ -- 16
+write$ -- 162
 (There were 2 warnings)

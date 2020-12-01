@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.10.7)  30 NOV 2020 18:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.10.7)  30 NOV 2020 19:33
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -282,15 +282,15 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has b
 <to be read again> 
                    \relax 
 l.59 \newpage
-              [2] [3] [4] [5] [6]
+              [2] [3] [4] [5] [6] [7]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 174.
- [7] [8]
-Overfull \hbox (13.01665pt too wide) in paragraph at lines 213--219
+(Font)              <5> on input line 192.
+ [8] [9]
+Overfull \hbox (13.01665pt too wide) in paragraph at lines 231--237
 []\OT1/cmr/m/n/12 Accuracy tests to be de-liv-ered upon project com-ple-tion ad-dress the evidence-
  []
 
-[9] [10] [11] (/home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.bbl
+[10] [11] [12] (/home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.bbl
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
@@ -309,7 +309,7 @@ Overfull \hbox (13.01665pt too wide) in paragraph at lines 213--219
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
-[12]
+[13]
 Underfull \hbox (badness 1540) in paragraph at lines 44--47
 []\OT1/cmr/m/n/12 ``The dan-gers of un-con-trolled sleep ap-nea.'' [On-
  []
@@ -331,6 +331,7 @@ Underfull \hbox (badness 1910) in paragraph at lines 44--47
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
+[14]
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
@@ -343,7 +344,6 @@ Underfull \hbox (badness 1910) in paragraph at lines 44--47
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
-[13]
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
@@ -351,34 +351,34 @@ Underfull \hbox (badness 1910) in paragraph at lines 44--47
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
 )
-<figures/gantt.png, id=296, 547.2947pt x 204.01219pt>
+<figures/gantt.png, id=304, 547.2947pt x 204.01219pt>
 File: figures/gantt.png Graphic file (type png)
 <use figures/gantt.png>
-Package pdftex.def Info: figures/gantt.png  used on input line 291.
+Package pdftex.def Info: figures/gantt.png  used on input line 309.
 (pdftex.def)             Requested size: 390.0pt x 145.37886pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 297.
- [14 </home/nick/fpga_ml/project_proposal/written_proposal/figures/gantt.PNG>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 297.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 315.
+ [15 </home/nick/fpga_ml/project_proposal/written_proposal/figures/gantt.PNG>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 315.
  (/home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 297.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 297.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 315.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 315.
 Package rerunfilecheck Info: File `ECE-07-Proposal-Fall.out' has not changed.
 (rerunfilecheck)             Checksum: E9E2FBEA4329F8D23A3C05DA192369FC;1712.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 297.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 315.
  ) 
 Here is how much of TeX's memory you used:
- 7332 strings out of 480478
- 109531 string characters out of 5905959
- 377657 words of memory out of 5000000
- 23182 multiletter control sequences out of 15000+600000
+ 7339 strings out of 480478
+ 109599 string characters out of 5905959
+ 377718 words of memory out of 5000000
+ 23186 multiletter control sequences out of 15000+600000
  539431 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,8n,37p,282b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,8n,37p,282b,441s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on /home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.pdf (17 pages, 156188 bytes).
+Output written on /home/nick/fpga_ml/project_proposal/written_proposal/ECE-07-Proposal-Fall.pdf (18 pages, 159808 bytes).
 PDF statistics:
- 351 PDF objects out of 1000 (max. 8388607)
- 317 compressed objects within 4 object streams
- 63 named destinations out of 1000 (max. 500000)
+ 359 PDF objects out of 1000 (max. 8388607)
+ 324 compressed objects within 4 object streams
+ 66 named destinations out of 1000 (max. 500000)
  230 words of extra memory for PDF output out of 10000 (max. 10000000)
 

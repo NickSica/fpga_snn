@@ -77,6 +77,17 @@ J.~Rodriguez, ``How much will a sleep study cost me?'' Dec 2016. [Online].
   \url{https://www.sleepdr.com/the-sleep-blog/how-much-will-a-sleep-study-cost-me/}
 \BIBentrySTDinterwordspacing
 
+\bibitem{mostafa}
+S.~S. Mostafa, F.~Mendon{\c{c}}a, A.~G~Ravelo-Garc{\'\i}a, and F.~Morgado-Dias,
+  ``A systematic review of detecting sleep apnea using deep learning,''
+  \emph{Sensors}, vol.~19, no.~22, p. 4934, 2019.
+
+\bibitem{ashmouny}
+K.~M. {Al-Ashmouny}, H.~M. {Hamed}, and A.~A. {Morsy}, ``Fpga-based sleep apnea
+  screening device for home monitoring,'' in \emph{2006 International
+  Conference of the IEEE Engineering in Medicine and Biology Society}, 2006,
+  pp. 5948--5951.
+
 \bibitem{chai}
 C.~L. Chai-Coetzer and R.~D. McEvoy, ``\BIBforeignlanguage{eng}{The debate
   should now be over: Simplified cardiorespiratory sleep tests are a reliable,

@@ -91,6 +91,24 @@ while asleep. This same problem may be created with the in-home test kit but may
 be corrected by an attending technician.
 
 \subsection{Problem Statement}
+Utilizing the data as a potential use case, the team will develop and implement a machine learning model, spiking neural network, on a
+processing unit, FPGA, to improve detection and labeling of oxygen levels and brain signals.  Since a technician must be required to view
+and analyze the data for sleep apnea, this model may eliminate the need for a technician until an episode has occurred or a sensor has been
+shifted. This frees the technician and can perform other tasks and will simply be notified if sleep apnea has occurred or there is an adjustment
+needed. In the case of the sensor being shifted for both a PSG and in-home, someone can be notified, and a mark can be indicated for such an
+event and projections can be produced to reduce impact of data loss. Another contribution will be to reduce the threshold to utilize an in-home
+test kit as the accuracy will be boosted since extrapolations will be made when taking in data based on previous data based on the candidate’s
+preliminary analysis such as age, height, weight, and previous medical history. Utilizing the base model and tuning the meta parameters to an
+individual, a model can be placed onto a CPAP machine to reduce noise pollution and energy usage. This process will hopefully bridge the gap
+for SNN on FPGA implementations and produce a use case to further explore this area. 
+
+Currently, there have been various implementations of deep learning on sleep apnea data to detect if the subject experienced sleep apnea. CNNs
+and RNNs seemed to be the predominant approach. However, these methods do not process signals in real time and do not predict as the events are
+occurring. A cornerstone for our implementation is to predict in near live time before an episode occurs based on the signals being read in.
+One of the important features that has been leveraged previously and will be leveraged in this implementation is the oxygen saturation index
+which is a measurement of oxygen in the blood. These measurements will be taken from various points of the body \cite{mostafa}.
+However, most of these implementations have been on CPUs and GPUs. Another cornerstone is implementing this onto an FPGA. While there have
+been implementations of FPGAs with sleep apnea in mind, there has been a larger focus on screening and monitoring strictly \cite{ashmouny}.
 
 
 \section{Design Description}
