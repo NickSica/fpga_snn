@@ -1,6 +1,6 @@
 This is BibTeX, Version 0.99d (TeX Live 2020/Arch Linux)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
-The top-level auxiliary file: ECE-07-Proposal-Fall.aux
+The top-level auxiliary file: technical_report.aux
 The style file: IEEEtran.bst
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
@@ -17,7 +17,7 @@ Warning--empty year in atsjournals
 Done.
 You've used 7 entries,
             4087 wiz_defined-function locations,
-            865 strings with 9172 characters,
+            865 strings with 9164 characters,
 and the built_in function-call counts, 5216 in all, are:
 = -- 368
 > -- 169
