@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.10.5)  26 FEB 2021 20:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.6.29) (preloaded format=pdflatex 2020.10.5)  26 FEB 2021 21:11
 entering extended mode
 **./ECE-07-Proposal-Fall.tex
 (ECE-07-Proposal-Fall.tex
@@ -425,20 +425,7 @@ File: figures/quadchart.png Graphic file (type png)
 <use figures/quadchart.png>
 Package pdftex.def Info: figures/quadchart.png  used on input line 40.
 (pdftex.def)             Requested size: 469.75502pt x 262.42935pt.
- [3 <./figures/quadchart.png>]
-
-LaTeX Warning: Citation `mostafa2019systematic' on page 4 undefined on input li
-ne 51.
-
-
-LaTeX Warning: Citation `valentine' on page 4 undefined on input line 54.
-
-[4]
-
-LaTeX Warning: Citation `mostafa2019systematic' on page 5 undefined on input li
-ne 60.
-
-[5] [6] [7] [8] (ECE-07-Proposal-Fall.bbl
+ [3 <./figures/quadchart.png>] [4] [5] [6] [7] [8] (ECE-07-Proposal-Fall.bbl
 ** WARNING: IEEEtran.bst: No hyphenation pattern has been
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
@@ -501,36 +488,33 @@ Underfull \hbox (badness 2050) in paragraph at lines 44--47
 ** loaded for the language `eng'. Using the pattern for
 ** the default language instead.
 ) [11]
-<figures/gantt.png, id=282, 547.2947pt x 204.01219pt>
+<figures/gantt.png, id=284, 547.2947pt x 204.01219pt>
 File: figures/gantt.png Graphic file (type png)
 <use figures/gantt.png>
-Package pdftex.def Info: figures/gantt.png  used on input line 142.
+Package pdftex.def Info: figures/gantt.png  used on input line 141.
 (pdftex.def)             Requested size: 469.75502pt x 175.11086pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 146.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 145.
  [12 <./figures/gantt.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 146.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 145.
  (ECE-07-Proposal-Fall.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 146.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 146.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 145.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 145.
 Package rerunfilecheck Info: File `ECE-07-Proposal-Fall.out' has not changed.
 (rerunfilecheck)             Checksum: 562BB0185C01358C030EAE5A383031BB;1958.
 
 
-LaTeX Warning: There were undefined references.
-
-
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 146.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 145.
  ) 
 Here is how much of TeX's memory you used:
- 8074 strings out of 480790
- 122495 string characters out of 2896363
+ 8072 strings out of 480790
+ 122461 string characters out of 2896363
  398231 words of memory out of 3000000
- 23905 multiletter control sequences out of 15000+200000
+ 23903 multiletter control sequences out of 15000+200000
  539096 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,7n,37p,1837b,439s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 37i,7n,37p,1839b,439s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Drifter\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tc
 rm1200.pk><C:/Users/Drifter/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
 sfonts/cm/cmbx12.pfb><C:/Users/Drifter/AppData/Local/Programs/MiKTeX/fonts/type
@@ -538,9 +522,9 @@ sfonts/cm/cmbx12.pfb><C:/Users/Drifter/AppData/Local/Programs/MiKTeX/fonts/type
 fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Drifter/AppData/Local/Progra
 ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Drifter/AppData/Lo
 cal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on ECE-07-Proposal-Fall.pdf (14 pages, 407183 bytes).
+Output written on ECE-07-Proposal-Fall.pdf (14 pages, 407278 bytes).
 PDF statistics:
- 325 PDF objects out of 1000 (max. 8388607)
+ 327 PDF objects out of 1000 (max. 8388607)
  59 named destinations out of 1000 (max. 500000)
  259 words of extra memory for PDF output out of 10000 (max. 10000000)
 
