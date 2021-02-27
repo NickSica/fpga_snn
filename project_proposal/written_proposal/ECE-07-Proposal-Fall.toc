@@ -27,5 +27,5 @@
 \contentsline {section}{\numberline {7}Project Management Update}{8}{section.7}%
 \contentsline {subsection}{\numberline {7.1}Project Budget}{9}{subsection.7.1}%
 \contentsline {subsection}{\numberline {7.2}Success Benchmarks}{9}{subsection.7.2}%
-\contentsline {section}{Appendices}{12}{section*.1}%
-\contentsline {section}{\numberline {A}Detailed Project Management}{12}{appendix.a.A}%
+\contentsline {section}{Appendices}{11}{section*.1}%
+\contentsline {section}{\numberline {A}Detailed Project Management}{11}{appendix.a.A}%
