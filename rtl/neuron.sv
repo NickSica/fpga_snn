@@ -2,12 +2,19 @@ module neuron
 	#(parameter int THRESHOLD)
 	(input  logic clk_i,
 	 input  logic rst_i,
+	 input  logic syn_i,
 	 input  logic axon_i,
 	 output logic spike_o);
 
 	logic synapse_r;
 	logic syn_out_c;
 	logic dendrite_r;
+
+	always_ff @(posedge clk_i) begin : p_load_synapse
+		if(rst_i) begin
+			synapse_r <= syn_i;
+		end
+	end
 
 	always_comb begin : p_synapse
 		if(rst_i) begin
