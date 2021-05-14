@@ -24,8 +24,10 @@ module winner_selection
 			max_node_c = '0;
 			spike_o = '0;
 		end else begin
-			for(int i = 0; i < NUM_NODES; i = i + 1) begin
-				if(node_c[i] > max_c) begin // Possible latch?
+			max_c = '0;
+			max_node_c = '0;
+			for(int i = 1; i < NUM_NODES; i = i + 1) begin
+				if(node_c[i] > max_c) begin
 					max_c = node_c[i];
 					max_node_c = i;
 				end
