@@ -6,14 +6,16 @@ module winner_selection
 	 output logic spike_o);
 
 	logic [31:0] node_c [0:NUM_NODES - 1];
-	logic [31:0] max_c;
-	logic [$clog2(NUM_NODES):0] max_node_c;
 
 	genvar i;
 	generate
 		for(i = 0; i < NUM_NODES; i = i + 1) begin : g_nodes
 			always_ff @(posedge clk_i) begin : p_nodes
-				node_c[i] = node_c[i] + nodes_i[i];
+				if(rst_i) begin
+					node_c[i] <= '0;
+				end else begin
+					node_c[i] <= node_c[i] + nodes_i[i];
+				end
 			end
 		end
 	endgenerate
@@ -24,8 +26,8 @@ module winner_selection
 			max_node_c = '0;
 			spike_o = '0;
 		end else begin
-			max_c = '0;
-			max_node_c = '0;
+			logic [31:0] max_c = '0;
+			logic [$clog2(NUM_NODES):0] max_node_c = '0;
 			for(int i = 1; i < NUM_NODES; i = i + 1) begin
 				if(node_c[i] > max_c) begin
 					max_c = node_c[i];

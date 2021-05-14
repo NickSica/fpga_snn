@@ -10,7 +10,9 @@ module neuron
 	logic dendrite_r;
 
 	always_comb begin : p_synapse
-		if(axon_i) begin
+		if(rst_i) begin
+			syn_out_c = 1'b0;
+		end else if(axon_i) begin
 			syn_out_c = synapse_r;
 		else end begin
 			syn_out_c = 1'b0;
@@ -18,7 +20,9 @@ module neuron
 	end
 
 	always_ff @(posedge clk_i) begin : p_counter
-		if(spike_o) begin
+		if(rst_i) begin
+			dendrite_r <= 1'b0;
+		end else if(spike_o) begin
 			dendrite_r <= 1'b0 + syn_out_r;
 		end else begin
 			dendrite_r <= dendrite_r + syn_out_r;

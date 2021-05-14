@@ -1,5 +1,7 @@
 module spike_encoder
-	#(parameter CLK_DIV = 1200000)
+	#(parameter CLK_DIV = 1200000,
+	  parameter DEFAULT_UTHR = 70,
+	  parameter DEFAULT_LTHR = 10)
 	(input logic  clk_i,
 	 input logic  rst_i,
 	 input logic [31:0] ecg_i,
@@ -36,7 +38,10 @@ module spike_encoder
 	end
 
 	always_ff @(posedge clk_i) begin : p_dff
-		if(dff_en_c) begin
+		if(rst_i) begin
+			uthr_r <= DEFAULT_UTHR;
+			lthr_r <= DEFAULT_LTHR;
+		end else if(dff_en_c) begin
 			uthr_r <= uthr_c;
 			lthr_r <= lthr_c;
 		end else begin
@@ -46,7 +51,9 @@ module spike_encoder
 	end
 
 	always_comb begin : p_uthr_mux
-		if(first_stage_comp_c == 1'b1) begin
+		if(rst_i) begin
+			uthr_c = '0;
+		end	else if(first_stage_comp_c == 1'b1) begin
 			uthr_c = adder_c;
 		end else if(second_stage_comp_c == 1'b1) begin
 			uthr_c = lthr_r;
@@ -56,7 +63,9 @@ module spike_encoder
 	end
 
 	always_comb begin : p_lthr_mux
-		if(first_stage_comp_c == 1'b1) begin
+		if(rst_i) begin
+			lthr_c = '0;
+		end	if(first_stage_comp_c == 1'b1) begin
 			lthr_c = uthr_r;
 		end else if(second_stage_comp_c == 1'b1) begin
 			lthr_c = sub_c;
@@ -66,7 +75,9 @@ module spike_encoder
 	end
 
 	always_comb begin : p_comp1
-		if(clk_r) begin
+		if(rst_i) begin
+			first_stage_comp_c = 1'b0;
+		end	else if(clk_r) begin
 			first_stage_comp_c = ecg_i == add_c;
 		end else begin
 			first_stage_comp_c = 1'b0;
@@ -74,7 +85,9 @@ module spike_encoder
 	end
 
 	always_comb begin : p_comp2
-		if(comp2_en_c) begin
+		if(rst_i) begin
+			second_stage_comp_c = '0;
+		end	else if(comp2_en_c) begin
 			second_stage_comp_c = ecg_i == sub_c;
 		end else begin
 			second_stage_comp_c = 1'b0;
@@ -82,7 +95,9 @@ module spike_encoder
 	end
 
 	always_comb begin : p_add
-		if(clk_r) begin
+		if(rst_i) begin
+			add_c = '0;
+		end else if(clk_r) begin
 			add_c = uthr_r + delta_i;
 		end else begin
 			add_c = '0;
@@ -90,7 +105,9 @@ module spike_encoder
 	end
 
 	always_comb begin : p_sub
-		if(second_stage_comp_c) begin
+		if(rst_i) begin
+			sub_c = '0;
+		end else if(second_stage_comp_c) begin
 			sub_c = lthr_r - delta_i;
 		end else begin
 			sub_c = '0;
