@@ -1,5 +1,5 @@
 module neuron
-	#(parameter int THRESHOLD)
+	#(parameter THRESHOLD = 100)
 	(input  logic clk_i,
 	 input  logic rst_i,
 	 input  logic syn_i,
