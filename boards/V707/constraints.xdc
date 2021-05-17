@@ -1,3 +1,5 @@
+## Part number for VC707 is xc7vx485tffg1761-2
+
 #GPIO_LED_4_LS
 set_property PACKAGE_PIN AR35 [get_ports out_o] 
 set_property IOSTANDARD LVCMOS18 [get_ports out_o]
