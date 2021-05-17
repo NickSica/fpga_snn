@@ -28,7 +28,7 @@ module spike_encoder
 		if(rst_i) begin
 			cnt_r <= '0;
 			clk_r <= 1'b0;
-		end else if(cnt_r = CLK_DIV - 1) begin
+		end else if(cnt_r == CLK_DIV - 1) begin
 			cnt_r <= '0;
 			clk_r <= ~clk_r;
 		end else begin
@@ -54,7 +54,7 @@ module spike_encoder
 		if(rst_i) begin
 			uthr_c = '0;
 		end	else if(first_stage_comp_c == 1'b1) begin
-			uthr_c = adder_c;
+			uthr_c = add_c;
 		end else if(second_stage_comp_c == 1'b1) begin
 			uthr_c = lthr_r;
 		end else begin
@@ -115,4 +115,4 @@ module spike_encoder
 	end
 
 	assign spike_o = first_stage_comp_c;
-endmodule spike_encoder
+endmodule : spike_encoder

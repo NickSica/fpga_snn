@@ -21,7 +21,7 @@ module neuron
 			syn_out_c = 1'b0;
 		end else if(axon_i) begin
 			syn_out_c = synapse_r;
-		else end begin
+		end else begin
 			syn_out_c = 1'b0;
 		end
 	end
@@ -30,9 +30,9 @@ module neuron
 		if(rst_i) begin
 			dendrite_r <= 1'b0;
 		end else if(spike_o) begin
-			dendrite_r <= 1'b0 + syn_out_r;
+			dendrite_r <= 1'b0 + syn_out_c;
 		end else begin
-			dendrite_r <= dendrite_r + syn_out_r;
+			dendrite_r <= dendrite_r + syn_out_c;
 		end
 	end
 
@@ -40,4 +40,4 @@ module neuron
 		spike_o = dendrite_r >= THRESHOLD;
 	end
 
-endmodule neuron
+endmodule : neuron

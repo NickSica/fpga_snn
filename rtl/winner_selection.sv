@@ -21,13 +21,13 @@ module winner_selection
 	endgenerate
 
 	always_comb begin : p_spike
+		logic [31:0] max_c = '0;
+		logic [$clog2(NUM_NODES):0] max_node_c = '0;
 		if(rst_i) begin
 			max_c = '0;
 			max_node_c = '0;
 			spike_o = '0;
 		end else begin
-			logic [31:0] max_c = '0;
-			logic [$clog2(NUM_NODES):0] max_node_c = '0;
 			for(int i = 1; i < NUM_NODES; i = i + 1) begin
 				if(node_c[i] > max_c) begin
 					max_c = node_c[i];
@@ -38,4 +38,4 @@ module winner_selection
 		end
 	end
 
-endmodule winner_selection
+endmodule : winner_selection
