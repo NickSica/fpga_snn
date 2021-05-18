@@ -19,6 +19,7 @@ module spike_encoder
 	logic dff_en_c;
 	logic comp2_en_c;
 	logic first_stage_comp_c;
+	/* verilator lint_off UNOPTFLAT */
 	logic second_stage_comp_c;
 
 	assign dff_en_c = first_stage_comp_c | second_stage_comp_c;
@@ -76,11 +77,11 @@ module spike_encoder
 
 	always_comb begin : p_comp1
 		if(rst_i) begin
-			first_stage_comp_c = 1'b0;
+			first_stage_comp_c = '0;
 		end	else if(clk_r) begin
 			first_stage_comp_c = ecg_i == add_c;
 		end else begin
-			first_stage_comp_c = 1'b0;
+			first_stage_comp_c = '0;
 		end
 	end
 
@@ -90,7 +91,7 @@ module spike_encoder
 		end	else if(comp2_en_c) begin
 			second_stage_comp_c = ecg_i == sub_c;
 		end else begin
-			second_stage_comp_c = 1'b0;
+			second_stage_comp_c = '0;
 		end
 	end
 

@@ -14,7 +14,7 @@ module winner_selection
 				if(rst_i) begin
 					node_c[i] <= '0;
 				end else begin
-					node_c[i] <= node_c[i] + nodes_i[i];
+					node_c[i] <= node_c[i] + {{31{1'b0}}, nodes_i[i]};
 				end
 			end
 		end
@@ -28,7 +28,7 @@ module winner_selection
 			max_node_c = '0;
 			spike_o = '0;
 		end else begin
-			for(int i = 1; i < NUM_NODES; i = i + 1) begin
+			for(logic [NUM_NODES - 1:0] i = 1; i < NUM_NODES; i = i + 1) begin
 				if(node_c[i] > max_c) begin
 					max_c = node_c[i];
 					max_node_c = i;
