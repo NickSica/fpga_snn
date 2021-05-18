@@ -1,0 +1,7 @@
+build
+sim_build
+results.xml
+tb/__pycache__
+vivado*
+webtalk*
+x*
