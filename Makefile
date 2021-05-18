@@ -25,14 +25,16 @@ build:
 
 # Include cocotb's make rules to help with sim setup
 cocotb:
-	include $(shell cocotb-config --makefiles)/Makefile.sim
+	cd tb
+	make
 
 test:
 	vlog -sv $(VLOG_SRC_FILES)
 	vsim -do wave.do -do "run -all" +nowarn3691 tb
 
-clean:
+clean_proj:
 	-rm -r $(outDir)
+	-rm -r sim_build
 	-rm vivado*
 	-rm webtalk*
 	-rm x*
