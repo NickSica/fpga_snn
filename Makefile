@@ -13,7 +13,7 @@ VLOG_SRC_FILES :=
 include rtl/rtl.mk
 include tb/tb.mk
 
-.PHONY: build clean
+.PHONY: all
 
 build:
 	$(vivado) $(script) -tclargs -partNum $(partNum) \
@@ -25,16 +25,17 @@ build:
 
 # Include cocotb's make rules to help with sim setup
 cocotb:
-	cd tb
-	make
+	$(MAKE) -f tb/tb.mk
 
 test:
 	vlog -sv $(VLOG_SRC_FILES)
 	vsim -do wave.do -do "run -all" +nowarn3691 tb
 
-clean_proj:
+_clean:
 	-rm -r $(outDir)
 	-rm -r sim_build
+	-rm results.xml
+	-rm -r tb/__pycache__
 	-rm vivado*
 	-rm webtalk*
 	-rm x*
