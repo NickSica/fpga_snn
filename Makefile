@@ -39,3 +39,4 @@ clean::
 	-rm vivado*
 	-rm webtalk*
 	-rm x*
+	-rm -r logs
