@@ -2,6 +2,7 @@ import itertools
 import pickle
 import sys
 
+from tensorflow.keras.utils import to_categorical
 from keras import optimizers
 from keras.layers import Conv1D, MaxPooling1D, Flatten, Dense, Dropout
 from keras.optimizers import SGD
@@ -22,6 +23,7 @@ from keras.models import Sequential
 np.random.seed(5)
 
 save_model = True
+plot_on = False
 
 # define cnn model
 def define_model():
@@ -29,7 +31,7 @@ def define_model():
     model.add(Dense(2, activation='relu'))
     model.add(Dense(2, activation='tanh'))
     model.add(Dense(2, activation='softmax'))
-    model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizers.Nadam(), metrics=['accuracy'])
+    model.compile(loss="categorical_crossentropy", optimizer=optimizers.Nadam(), metrics=['accuracy'])
     return model
 
 baseDir = os.getcwd()
@@ -75,23 +77,31 @@ _,_,SxxTest = stft(raw_test.get_data(),nperseg=12100)
 # Train
 y_train = np.array([[1] if anno == "A" else [0] for anno in annot_train.description])
 y_test = np.array([[1] if anno == "A" else [0] for anno in annot_test.description])
+y_test = to_categorical(y_test)
+y_test_bool = np.array([True if anno == "A" else False for anno in annot_test.description], dtype=np.bool)
 
 sTest = SxxTest.reshape(1,528,6051)
 sTrain = SxxTrain.reshape(1,489,6063)
+
+# Same test variables for conversion
+np.savez_compressed(os.path.join(dataDir, "x_test.npz"), sTest[0])
+np.savez_compressed(os.path.join(dataDir, "y_test.npz"), y_test)
+
 
 model.fit(sTest[0], y_test,epochs=50, batch_size=32, shuffle=True)
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, confusion_matrix
 y_pred_nn = model.predict(sTest[0])
 label_train_pred = [pred.argmax() for pred in y_pred_nn]
-cm = confusion_matrix(y_test, label_train_pred)
+if plot_on:
+    cm = confusion_matrix(y_test, label_train_pred)
 
-plt.matshow(cm, cmap=plt.cm.gray)
-plt.show()
+    plt.matshow(cm, cmap=plt.cm.gray)
+    plt.show()
 
 if save_model:
     if not os.path.isdir(dataDir):
         os.mkdir(outputDir)
-    model.save(os.path.join(dataDir, "model.h5"), save_format='h5')
+    model.save(os.path.join(dataDir, "model", "model.h5"), save_format='h5')
 
 
 
