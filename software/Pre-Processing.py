@@ -20,21 +20,25 @@ import matplotlib.pyplot as plt
 import snntoolbox
 from keras.models import Sequential
 np.random.seed(5)
+
+save_model = True
+
 # define cnn model
 def define_model():
     model = Sequential()
     model.add(Dense(2, activation='relu'))
     model.add(Dense(2, activation='tanh'))
     model.add(Dense(2, activation='softmax'))
-    model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizers.nadam(), metrics=['accuracy'])
+    model.compile(loss="sparse_categorical_crossentropy", optimizer=optimizers.Nadam(), metrics=['accuracy'])
     return model
 
+baseDir = os.getcwd()
+dataDir = os.path.join(baseDir, "data")
+outputDir = os.path.join(baseDir, "model")
+recordFile = os.path.join(dataDir, "Records.csv")
 
-baseDir = r"C:\Users\Drifter\Documents\TEST\Test"
-recordFile = os.path.join(baseDir, "Records.csv")
-
-raw_train = mne.io.read_raw_edf(r"C:\Users\Drifter\Documents\TEST\Test\a01.edf")
-annot_train = mne.read_annotations(r"C:\Users\Drifter\Documents\TEST\Test\a01.txt")
+raw_train = mne.io.read_raw_edf(os.path.join(dataDir, "a01.edf"))
+annot_train = mne.read_annotations(os.path.join(dataDir, "a01.txt"))
 
 raw_train.set_annotations(annot_train, emit_warning=False)
 
@@ -53,8 +57,8 @@ tmax = 30. - 1. / raw_train.info['sfreq']
 epochs_train = mne.Epochs(raw=raw_train, events=events_train,
                           event_id=event_id, tmin=0., tmax=tmax, baseline=None)
 
-raw_test = mne.io.read_raw_edf(r"C:\Users\Drifter\Documents\TEST\Test\a02.edf")
-annot_test = mne.read_annotations(r"C:\Users\Drifter\Documents\TEST\Test\a02.txt")
+raw_test = mne.io.read_raw_edf(os.path.join(dataDir, "a02.edf"))
+annot_test = mne.read_annotations(os.path.join(dataDir, "a02.txt"))
 
 annot_test.crop(annot_test[1]['onset'] - 30 * 60,
                 annot_test[-2]['onset'] + 30 * 60)
@@ -84,7 +88,10 @@ cm = confusion_matrix(y_test, label_train_pred)
 plt.matshow(cm, cmap=plt.cm.gray)
 plt.show()
 
-
+if save_model:
+    if not os.path.isdir(dataDir):
+        os.mkdir(outputDir)
+    model.save(os.path.join(dataDir, "model.h5"), save_format='h5')
 
 
 
