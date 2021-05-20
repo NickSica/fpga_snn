@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module snn
 	#(parameter NUM_NODES = 1)
 	(input  logic clk_i,
