@@ -1,7 +1,11 @@
 `timescale 1ns/1ps
 
 module snn
-	#(parameter NUM_NODES = 1)
+	#(parameter NUM_NODES = 1,
+	  parameter CLK_DIV = 1200000,
+	  parameter DEFAULT_UTHR = 0,
+	  parameter DEFAULT_LTHR = 0,
+	  parameter THRESHOLD = 0)
 	(input  logic clk_i,
 	 input  logic rst_i,
 	 input  logic [31:0] ecg_i,
@@ -14,13 +18,15 @@ module snn
 	logic [1:0] syn_weights_r [0:NUM_NODES - 1];
 
 	always_ff @(posedge clk_i) begin : p_load_weights
-		syn_weights_r <= syn_weights_i;
+		for(int i = 0; i < NUM_NODES; i++) begin
+			syn_weights_r[i] <= syn_weights_i[i];
+		end
 	end
 
 	spike_encoder
-		#(.CLK_DIV(1200000),
-		  .DEFAULT_UTHR(70),
-		  .DEFAULT_LTHR(10))
+		#(.CLK_DIV(CLK_DIV),
+		  .DEFAULT_UTHR(DEFAULT_UTHR),
+		  .DEFAULT_LTHR(DEFAULT_LTHR))
 		SE0 (.clk_i,
 			   .rst_i,
 			   .ecg_i,
@@ -31,7 +37,7 @@ module snn
 	generate
 		for(i = 0; i < NUM_NODES; i = i + 1) begin : g_neurons
 			neuron
-				#(.THRESHOLD(12000))
+				#(.THRESHOLD(THRESHOLD))
 				N0 (.clk_i,
 					  .rst_i,
 					  .syn_i(syn_weights_r[i]),
@@ -41,7 +47,7 @@ module snn
 	endgenerate
 
 	winner_selection
-		#(.NUM_NODES(1))
+		#(.NUM_NODES(NUM_NODES))
 		WS0 (.clk_i,
 			   .rst_i,
 			   .nodes_i(nodes_c),

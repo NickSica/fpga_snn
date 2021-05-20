@@ -1,7 +1,7 @@
 module spike_encoder
 	#(parameter CLK_DIV = 1200000,
-	  parameter DEFAULT_UTHR = 70,
-	  parameter DEFAULT_LTHR = 10)
+	  parameter DEFAULT_UTHR = 0,
+	  parameter DEFAULT_LTHR = 0)
 	(input logic  clk_i,
 	 input logic  rst_i,
 	 input logic [31:0] ecg_i,

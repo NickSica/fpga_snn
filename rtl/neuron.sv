@@ -1,5 +1,5 @@
 module neuron
-	#(parameter THRESHOLD = 100)
+	#(parameter integer THRESHOLD = 0)
 	(input  logic clk_i,
 	 input  logic rst_i,
 	 input  logic [1:0] syn_i,
@@ -28,7 +28,8 @@ module neuron
 	end
 
 	always_ff @(posedge clk_i) begin : p_counter
-		logic [NUM_BITS_DENDRITE:0] syn_out_v = {{($bits(dendrite_r) - 1){syn_out_c[1]}}, syn_out_c[0]};
+		logic [NUM_BITS_DENDRITE:0] syn_out_v;
+		syn_out_v = {{($bits(dendrite_r) - 1){syn_out_c[1]}}, syn_out_c[0]};
 		if(rst_i) begin
 			dendrite_r <= '0;
 		end else if(spike_o) begin
