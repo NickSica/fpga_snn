@@ -25,7 +25,7 @@ build:
 
 # Include cocotb's make rules to help with sim setup
 cocotb:
-	$(MAKE) -f tb/tb.mk
+	python tb/run_cocotb.py
 
 test:
 	vlog -sv $(VLOG_SRC_FILES)
