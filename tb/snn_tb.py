@@ -2,12 +2,20 @@ import configparser
 
 import cocotb
 from cocotb.triggers import Timer
-from cocotb.triggers import FallingEdge
+from cocotb.triggers import RisingEdge
 from cocotb.clock import Clock
 
 from snntoolbox.bin.run import main
 import h5py
 import numpy as np
+
+async def send_inputs(dut, data):
+    for idx, i in enumerate(data):
+        await RisingEdge(dut.clk_i)
+        dut.ecg_i <= int(i)
+        dut.delta_i <= int(i * 0.1)
+        if(str(dut.spike_o) == 'x'):
+            dut._log.info("Key: " + str(idx) + "Value: " + str(int(i)))
 
 @cocotb.test()
 async def test(dut):
@@ -39,14 +47,17 @@ async def test(dut):
     data = np.load("data/x_test.npz")
     data = list(np.concatenate(data["arr_0"]).flat)
 
-    ## TODO: Put in fork
-    for i in data:
-        dut.ecg_i <= int(i)
-        dut.delta_i <= int(i * 0.1)
+    input_proc = cocotb.fork(send_inputs(dut, data))
+    while True:
+        await RisingEdge(dut.clk_i)
+        time = cocotb.utils.get_sim_time(units="ns")
+        dut._log.info("Time : " + str(time) + " Spike: " + str(dut.spike_o))
+        if str(dut.spike_o) == 'x':
+            break
+        if time == len(data):
+            break
 
     ## TODO: Figure out how to feed snntoolbox
-
-    dut.spike_o # TODO: compare to snntoolbox somehow
 
     assert True
     dut._log.info("Running test...done")
