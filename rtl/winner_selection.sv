@@ -22,18 +22,16 @@ module winner_selection
 
 	always_comb begin : p_spike
 		logic [31:0] max_v;
-		logic [$clog2(NUM_NODES):0] max_node_v;
+		int max_node_v;
 		max_v = '0;
-		max_node_v = '0;
+		max_node_v = 0;
 		if(rst_i) begin
-			max_v = '0;
-			max_node_v = '0;
 			spike_o = '0;
 		end else begin
-			for(int i = 1; i < NUM_NODES; i = i + 1) begin
+			for(int i = 0; i < NUM_NODES; i = i + 1) begin
 				if(node_c[i] > max_v) begin
 					max_v = node_c[i];
-					max_node_v = NUM_NODES'(i);
+					max_node_v = i;
 				end
 			end
 			spike_o = nodes_i[max_node_v];
