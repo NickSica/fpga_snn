@@ -23,12 +23,12 @@ module winner_selection
 	always_comb begin : p_spike
 		logic [31:0] max_v;
 		int max_node_v;
-		max_v = '0;
+		max_v = node_c[0];
 		max_node_v = 0;
 		if(rst_i) begin
 			spike_o = '0;
 		end else begin
-			for(int i = 0; i < NUM_NODES; i = i + 1) begin
+			for(int i = 1; i < NUM_NODES; i = i + 1) begin
 				if(node_c[i] > max_v) begin
 					max_v = node_c[i];
 					max_node_v = i;
