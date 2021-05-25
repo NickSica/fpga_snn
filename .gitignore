@@ -5,3 +5,4 @@ tb/__pycache__
 vivado*
 webtalk*
 x*
+!/data/x*
