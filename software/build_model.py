@@ -1,16 +1,12 @@
 #!/usr/bin/python3
 
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras import optimizers
-from tensorflow.keras.layers import Dense, LSTM
+from tensorflow.keras.layers import Dense, Input, Conv1D, BatchNormalization, ReLU, GlobalAveragePooling1D
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.callbacks import EarlyStopping
-from sklearn.metrics import confusion_matrix
 import numpy as np
 import os
 import mne
 import csv
-import matplotlib.pyplot as plt
 np.random.seed(5)
 
 save_model = True
@@ -20,7 +16,7 @@ input_segment_length = 6000
 num_neurons = 4
 value_for_over_thresh = 1
 value_for_under_thresh = 0
-max_patients = 8
+max_patients = 4
 baseDir = os.getcwd()
 dataDir = os.path.join(baseDir, "data")
 outputDir = os.path.join(baseDir, "model")
@@ -31,10 +27,14 @@ event_id = {'A': 1,
 
 def define_model():
     model = Sequential()
-    model.add(LSTM(1))
+    model.add(Input((input_segment_length, 1)))
+    model.add(Conv1D(filters=64, kernel_size=3, padding="same"))
+    model.add(BatchNormalization())
+    model.add(ReLU())
+    model.add(GlobalAveragePooling1D())
     model.add(Dense(num_neurons, activation="relu"))
-    model.add(Dense(max_patients, activation="softmax"))
-    model.compile(loss='categorical_crossentropy', metrics=['accuracy'])
+    model.add(Dense(2, activation="softmax"))
+    model.compile(loss='sparse_categorical_crossentropy', metrics=['sparse_categorical_accuracy'])
     return model
 
 def load_all_data(train_or_test):
@@ -56,32 +56,22 @@ def load_all_data(train_or_test):
         loaded_data = load_data(record)
         all_data.append(loaded_data)
         spike_sequences.append(spike_convert(loaded_data))
-    # Ensure same amount of time for each test
-    min_seq_length = min([len(seq) for seq in spike_sequences])
+    # Collapse records
+    all_sequences = []
     for sequence in spike_sequences:
-        while len(sequence) > min_seq_length:
-            sequence.pop()
+        for spikes in sequence:
+            all_sequences.append(spikes)
     # Make sure all annotations are corrected
     labels = []
     for edf in all_data:
         annotations = edf.annotations.description
-        # binarized_annotations = to_categorical(np.array([[1] if anno == "A" else [0] for anno in annotations]), num_classes=2)
-        binarized_annotations = np.array([[1] if anno == "A" else [0] for anno in annotations])
-        labels.append(binarized_annotations[0:min_seq_length])
+        binarized_annotations = [[1] if anno == "A" else [0] for anno in annotations]
+        for label in binarized_annotations:
+            labels.append(label)
     # A bit of reformatting
-    # reshaped_spikes = []
-    # for sequence in spike_sequences:
-    #     for binary_train in sequence:
-    #         reshaped_spikes.append(binary_train)
-    # reshaped_labels = []
-    # for label_list in labels:
-    #     for label in label_list:
-    #         reshaped_labels.append(label)
     labels = np.array(labels)
-    labels = labels.reshape(min_seq_length, len(spike_sequences))
-    # labels = labels.reshape(len(spike_sequences), min_seq_length)
-    reformatted_spikes = np.asarray(spike_sequences).astype('float32')
-    reformatted_spikes = reformatted_spikes.reshape(min_seq_length, len(spike_sequences), input_segment_length)
+    reformatted_spikes = np.asarray(all_sequences) .astype('float32')
+    reformatted_spikes = reformatted_spikes.reshape(reformatted_spikes.shape[0], reformatted_spikes.shape[1], 1)
     return [all_data, reformatted_spikes, labels]
         
 def load_data(data_name):
@@ -89,15 +79,6 @@ def load_data(data_name):
     annotations = mne.read_annotations(os.path.join(dataDir, data_name+".txt"))
     raw_data.set_annotations(annotations, emit_warning=False)
     return raw_data
-
-def define_tests():
-    global raw_test, annot_test
-    raw_test = mne.io.read_raw_edf(os.path.join(dataDir, "a02.edf"))
-    annot_test = mne.read_annotations(os.path.join(dataDir, "a02.txt"))
-
-    annot_test.crop(annot_test[1]['onset'] - 30 * 60,
-                annot_test[-2]['onset'] + 30 * 60)
-    raw_test.set_annotations(annot_test, emit_warning=False)
 
 def spike_convert(raw_edf):
     edf_data = raw_edf.get_data()[0]
@@ -136,25 +117,14 @@ if __name__ == "__main__":
     all_edf_train, data_train, train_labels = load_all_data("train")
     all_edf_test, data_test, test_labels = load_all_data("test")
 
-    # TODO Save data (NOT TESTED)
     np.savez_compressed(os.path.join(dataDir, "x_test.npz"), data_train)
     np.savez_compressed(os.path.join(dataDir, "y_test.npz"), train_labels)
 
     print(data_train.shape)
     print(train_labels.shape)
-    history = model.fit(data_train, train_labels, epochs=50, batch_size=32,
-        shuffle=True, callbacks=[EarlyStopping(monitor='accuracy', patience=3)])
+    history = model.fit(data_train, train_labels, epochs=1, batch_size=64,
+        shuffle=True, callbacks=[EarlyStopping(monitor='sparse_categorical_crossentropy', patience=3)])
     print(model.summary())
-    print(history.history['accuracy'])
-    # y_pred_nn = model.predict(all_edf_test)
-
-    #NOT TESTED YET
-    # label_train_pred = [pred.argmax() for pred in y_pred_nn]
-
-    # if plot_on:
-    #     cm = confusion_matrix(y_test, label_train_pred)
-    #     plt.matshow(cm, cmap=plt.cm.gray)
-    #     plt.show()
 
     if save_model:
         if not os.path.isdir(dataDir):
