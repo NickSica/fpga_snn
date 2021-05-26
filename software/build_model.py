@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 
 from tensorflow.keras.utils import to_categorical
-from keras import optimizers
-from keras.layers import Dense, LSTM
-from keras.models import Sequential
+from tensorflow.keras import optimizers
+from tensorflow.keras.layers import Dense, LSTM
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.callbacks import EarlyStopping
 from sklearn.metrics import confusion_matrix
 import numpy as np
 import os
@@ -19,6 +20,7 @@ input_segment_length = 6000
 num_neurons = 4
 value_for_over_thresh = 1
 value_for_under_thresh = 0
+max_patients = 8
 baseDir = os.getcwd()
 dataDir = os.path.join(baseDir, "data")
 outputDir = os.path.join(baseDir, "model")
@@ -27,19 +29,12 @@ trainRecordFile = os.path.join(dataDir, "TrainRecords.csv")
 event_id = {'A': 1,
             'N': 0}
 
-# define cnn model
 def define_model():
-    # OLD MODEL
-    # model = Sequential()
-    # model.add(Dense(2, activation='relu'))
-    # model.add(Dense(4, activation='tanh'))
-    # model.add(Dense(2, activation='softmax'))
-    # model.compile(loss="categorical_crossentropy", optimizer=optimizers.Nadam(), metrics=['accuracy'])
-    # NEW MODEL
     model = Sequential()
-    model.add(LSTM(input_segment_length))
+    model.add(LSTM(1))
     model.add(Dense(num_neurons, activation="relu"))
-    model.compile(loss='binary_crossentropy', optimizer=optimizers.Nadam(), metrics=['accuracy'])
+    model.add(Dense(max_patients, activation="softmax"))
+    model.compile(loss='categorical_crossentropy', metrics=['accuracy'])
     return model
 
 def load_all_data(train_or_test):
@@ -56,8 +51,8 @@ def load_all_data(train_or_test):
     all_data = []
     spike_sequences = []
     for record in records:
-        # if len(spike_sequences) > 5:
-        #     break
+        if len(spike_sequences) > max_patients-1:
+            break
         loaded_data = load_data(record)
         all_data.append(loaded_data)
         spike_sequences.append(spike_convert(loaded_data))
@@ -70,10 +65,23 @@ def load_all_data(train_or_test):
     labels = []
     for edf in all_data:
         annotations = edf.annotations.description
-        binarized_annotations = to_categorical(np.array([[1] if anno == "A" else [0] for anno in annotations]), num_classes=2)
+        # binarized_annotations = to_categorical(np.array([[1] if anno == "A" else [0] for anno in annotations]), num_classes=2)
+        binarized_annotations = np.array([[1] if anno == "A" else [0] for anno in annotations])
         labels.append(binarized_annotations[0:min_seq_length])
+    # A bit of reformatting
+    # reshaped_spikes = []
+    # for sequence in spike_sequences:
+    #     for binary_train in sequence:
+    #         reshaped_spikes.append(binary_train)
+    # reshaped_labels = []
+    # for label_list in labels:
+    #     for label in label_list:
+    #         reshaped_labels.append(label)
     labels = np.array(labels)
+    labels = labels.reshape(min_seq_length, len(spike_sequences))
+    # labels = labels.reshape(len(spike_sequences), min_seq_length)
     reformatted_spikes = np.asarray(spike_sequences).astype('float32')
+    reformatted_spikes = reformatted_spikes.reshape(min_seq_length, len(spike_sequences), input_segment_length)
     return [all_data, reformatted_spikes, labels]
         
 def load_data(data_name):
@@ -129,11 +137,15 @@ if __name__ == "__main__":
     all_edf_test, data_test, test_labels = load_all_data("test")
 
     # TODO Save data (NOT TESTED)
-    # np.savez_compressed(os.path.join(dataDir, "x_test.npz"), data_train)
-    # np.savez_compressed(os.path.join(dataDir, "y_test.npz"), train_labels)
+    np.savez_compressed(os.path.join(dataDir, "x_test.npz"), data_train)
+    np.savez_compressed(os.path.join(dataDir, "y_test.npz"), train_labels)
 
-    model.fit(data_train, train_labels, epochs=50, batch_size=32, shuffle=True)
+    print(data_train.shape)
+    print(train_labels.shape)
+    history = model.fit(data_train, train_labels, epochs=50, batch_size=32,
+        shuffle=True, callbacks=[EarlyStopping(monitor='accuracy', patience=3)])
     print(model.summary())
+    print(history.history['accuracy'])
     # y_pred_nn = model.predict(all_edf_test)
 
     #NOT TESTED YET
@@ -144,7 +156,7 @@ if __name__ == "__main__":
     #     plt.matshow(cm, cmap=plt.cm.gray)
     #     plt.show()
 
-    # if save_model:
-    #     if not os.path.isdir(dataDir):
-    #         os.mkdir(outputDir)
-    #     model.save(os.path.join(dataDir, "model", "model.h5"), save_format='h5')
+    if save_model:
+        if not os.path.isdir(dataDir):
+            os.mkdir(outputDir)
+        model.save(os.path.join(dataDir, "model", "model.h5"), save_format='h5')
