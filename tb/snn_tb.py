@@ -29,8 +29,13 @@ async def test(dut):
     config = configparser.ConfigParser()
     config.read("tb/snn_toolbox.ini")
 
-    h5_file = config["paths"]["filename_ann"] + "_snn" + ".h5"
+    h5_file = config["paths"]["filename_ann"] + ".h5"
     h5 = h5py.File(h5_file, 'r')
+    print(dict(h5["model_weights"]["dense"]["dense"]))
+    print(dict(h5["model_weights"]["dense_1"]["dense_1"]))
+    print(dict(h5["model_weights"]["lstm"]["lstm"]["lstm_cell"]))
+    print(dict(h5["optimizer_weights"]["RMSprop"]))
+    return
     weights = []
     for key in h5["model_weights"].keys():
         if key != "input_1":
