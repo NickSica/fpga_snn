@@ -15,10 +15,11 @@ def setup():
     v_thresh = h5["model_weights"]["0Dense_2"]["v_thresh:0"].shape
     param_str = ""
     if not v_thresh:
-        param_str = " -PTHRESHOLD=0"
+        param_str = " -Psnn.THRESHOLD=5"
     else:
-        param_str = " -PTHRESHOLD=" + h5["model_weights"]["0Dense_2"]["v_thresh:0"].shape[0]
+        param_str = " -Psnn.THRESHOLD=" + h5["model_weights"]["0Dense_2"]["v_thresh:0"].shape[0]
 
+    param_str += " -Psnn.NUM_NODES=4"
     if "COMPILE_ARGS" in os.environ:
         os.environ["COMPILE_ARGS"] = os.environ["COMPILE_ARGS"] + param_str
     else:
