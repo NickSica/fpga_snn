@@ -3,7 +3,7 @@
 module snn
 	#(parameter NUM_NODES = 1,
 	  parameter CLK_DIV = 1200000,
-	  parameter DEFAULT_UTHR = 0,
+	  parameter DEFAULT_UTHR = 1,
 	  parameter DEFAULT_LTHR = 0,
 	  parameter THRESHOLD = 0)
 	(input  logic clk_i,
