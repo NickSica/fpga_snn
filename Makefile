@@ -24,12 +24,17 @@ build:
 								 -srcDir $(srcDir)
 
 # Include cocotb's make rules to help with sim setup
-cocotb:
+cocotb: clean_cocotb
 	python tb/run_cocotb.py
 
-test:
+test: clean_cocotb
 	vlog -sv $(VLOG_SRC_FILES)
 	vsim -do wave.do -do "run -all" +nowarn3691 tb
+
+clean_cocotb:
+	-rm -r sim_build
+	-rm -r logs
+	-rm results.xml
 
 clean::
 	-rm -r $(outDir)
