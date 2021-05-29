@@ -131,13 +131,13 @@ which is a measurement of oxygen in the blood. These measurements will be taken 
 		\subitem Keras \& Tensorflow - Build neural network layers and preprocess data
 		\subitem Seaborn - Effectively visualize features, data points, and metrics
 		\subitem MNE - Effectively read and analyze signals for processing
-		\subitem Snntoolbox - Convert developed RNN model into SNN equivalent
+		\subitem Snntoolbox - Convert developed ANN model into SNN equivalent
 \end{itemize}	
 
 \section{Results and Analysis}
 \subsection{Artificial Neural Network (ANN)}
 \subsubsection{Concept}
-ANN is an artificial neural network that is a computational model that mimics biological neural networks. There are many types of ANNs such as CNN, RNN, and SNN. There are 3 major components of an ANN. There is an input layer, hidden layers, and output layer. There are neurons or nodes for each hidden layer that connects between each layer of the neural network. The connections have assigned weights that are developed during training. An activation function drives the signal based on the weighted sum. The primary functions used were rectified linear units (RELU), TANH, and Softmax. RELU is a commonly used function for neural networks because of its simplicity. If the weighted sum of the previous connections is negative, the output is 0. However, if the weighted sum is positive, the output is the positive value. Tanh is a hyperbolic tangent function. It takes the weighted sum and outputs a value in the range of -1 to 1. Softmax is a probabilistic version of the argmax activation function. An argmax activation function returns the largest value of the weights.
+ANN is an artificial neural network that is a computational model that mimics biological neural networks. There are many types of ANNs such as CNN, RNN, and SNN. There are 3 major components of an ANN. There is an input layer, hidden layers, and output layer. There are neurons or nodes for each hidden layer that connects between each layer of the neural network. The connections have assigned weights that are developed during training. An activation function drives the signal based on the weighted sum. The primary functions used were rectified linear units (ReLU), hyperbolic tangent (TANH), and Softmax. ReLU is a commonly used function for neural networks because of its simplicity. If the weighted sum of the previous connections is negative, the output is 0. However, if the weighted sum is positive, the output is the positive value. The TANH function takes the weighted sum and outputs a value in the range of -1 to 1. Softmax is a probabilistic version of the argmax activation function. An argmax activation function returns the largest value of the weights.
 
 \subsubsection{Detailed Design}
 The software model was developed and tuned on data available from PhysioNet, a database with electrocardiogram (ECG) signals labeled during expertly 
@@ -156,7 +156,7 @@ The remainder of the network consisted of a dense layer of four neurons with wei
 layer choosing between one of the two possible classifications. 
 
 \subsubsection{Results}
-After pre-processing the data and training our model, we leveraged the training data as our testing data. This was an initial litmus test to observe the functionality of the model. The initial accuracy is 0.7955. The confusion matrix is shown in Figure~\ref{fig:cmANN}. Other metrics that allow one to analyze the performance of the model are precision and recall. Precision determines what portion of the signals that determined to be apnea were actually apnea. Recall determines that the signals that were actually apnea episodes were labelled as such. The precision was 0.6327 and the recall was 0.7955.
+After pre-processing the data and training our model, we leveraged the training data as our testing data. This was an initial litmus test to observe the functionality of the model. The initial accuracy is 0.7955. The confusion matrix is shown in Figure~\ref{fig:cmANN}. Other metrics that allow one to analyze the performance of the model are precision and recall. Precision determines what portion of the signals that were determined to be apnea were actually apnea. Recall determines that the signals that were actually apnea episodes were labeled as such. The precision was 0.6327 and the recall was 0.7955.
 \begin{figure}[H]
   \centering
   \includegraphics[width=5in]{NN.png}
@@ -164,7 +164,7 @@ After pre-processing the data and training our model, we leveraged the training 
   \caption{This is a confusion matrix of the initial ANN. It can be observed that the model is currently guessing one answer for all time segments and obtaining a high accuracy.}
 \end{figure}
 \subsubsection{Analysis}
-It is evident that the model is simply just labeling each signal an apnea episode and the accuracy is simply the probability of the signal being an apnea episode. This can be attributed to the fact that at the current stage, we are passing in the training label as test labels. Currently, we are developing a pipeline that will transform and split the data in order to increase the sample size for training and testing. We are also analyzing other methods to process signals and saturation levels to extract the more important features and reduce the noise of the signals.
+It is evident that the model is simply just labeling each signal an apnea episode and the accuracy is simply the probability of the signal being an apnea episode. This can be attributed to the fact that at the current stage, we are passing in the training label as test labels. Currently, we are developing a pipeline that will transform and split the data in order to increase the sample size for training and testing. We are also analyzing other methods to process signals and saturation levels to extract the most important features and reduce the noise of the signals.
 
 \section{Discussion}
 \subsection{Process}
@@ -173,7 +173,7 @@ A more enlightened approach took advantage of the sinusoidal and periodic nature
 Further considerations for how to better optimize the network such that the prediction accuracy is at an acceptable level continue to be explored. This continues at the same time as converting the software model to one that is hardware compatible with the conversion tool. Progress is presently being made on converting simpler networks fitted to the data to be compatible with the FPGA and surrounding programmable architecture. 
 
 \subsection{Result}
-Preliminary results have shown promise when implemented with the STFT pre-processed PSG data when fed into the ANN model. Previous implementations were sporadic on predictions and upon any training epoch’s completion accuracy would either become insanely high or shockingly low. The inconsistencies were mitigated considerably upon first applying the SFTF pre-processing step before fitting the network. Training results now feature accuracy scales well above 70\% with validation falling within a similar range. Architecture modifications are underway to solve an anomaly in prediction that has developed recently where a dense ANN architecture output the positive apnea state most of the time. Naturally, this bodes well for predicting a patient who suffers from apnea but does not generalize well to control or borderline cases. 
+Preliminary results have shown promise when implemented with the STFT pre-processed PSG data when fed into the ANN model. Previous implementations were sporadic on predictions and during any training epoch the completion accuracy would either become insanely high or shockingly low. The inconsistencies were mitigated considerably upon first applying the STFT pre-processing step before fitting the network. Training results now feature accuracy scales well above 70\% with validation falling within a similar range. Architecture modifications are underway to solve an anomaly in prediction that has developed recently where a dense ANN architecture would output the positive apnea state most of the time. Naturally, this bodes well for predicting a patient who suffers from apnea but does not generalize well to control or borderline cases. 
 
 \section{Budget Update}
 The total cost of all materials consists only of the expenses incurred by the hardware design choice. The FPGA provided by Xilinx is
