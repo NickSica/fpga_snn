@@ -1,12 +1,14 @@
-This is BibTeX, Version 0.99d (TeX Live 2020/W32TeX)
+This is BibTeX, Version 0.99d
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: technical_report.aux
+Reallocating 'name_of_file' (item size: 1) to 9 items.
 The style file: IEEEtran.bst
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
-Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
-Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocating 'name_of_file' (item size: 1) to 4 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
+Reallocating 'wiz_functions' (item size: 4) to 6000 items.
+Reallocating 'singl_function' (item size: 4) to 100 items.
 Database file #1: ref.bib
 -- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
@@ -17,43 +19,43 @@ Warning--empty year in atsjournals
 Done.
 You've used 8 entries,
             4087 wiz_defined-function locations,
-            875 strings with 9530 characters,
-and the built_in function-call counts, 6453 in all, are:
-= -- 460
-> -- 219
-< -- 47
-+ -- 118
-- -- 44
-* -- 337
-:= -- 903
+            871 strings with 9282 characters,
+and the built_in function-call counts, 6165 in all, are:
+= -- 436
+> -- 197
+< -- 43
++ -- 108
+- -- 39
+* -- 318
+:= -- 862
 add.period$ -- 15
 call.type$ -- 8
 change.case$ -- 7
-chr.to.int$ -- 108
+chr.to.int$ -- 102
 cite$ -- 10
-duplicate$ -- 447
-empty$ -- 495
-format.name$ -- 49
-if$ -- 1493
+duplicate$ -- 431
+empty$ -- 496
+format.name$ -- 44
+if$ -- 1429
 int.to.chr$ -- 0
 int.to.str$ -- 8
-missing$ -- 93
+missing$ -- 87
 newline$ -- 55
 num.names$ -- 6
-pop$ -- 257
+pop$ -- 248
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 473
+skip$ -- 458
 stack$ -- 0
-substring$ -- 267
-swap$ -- 377
-text.length$ -- 11
+substring$ -- 253
+swap$ -- 352
+text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 5
 type$ -- 8
 warning$ -- 2
 while$ -- 19
 width$ -- 9
-write$ -- 100
+write$ -- 98
 (There were 2 warnings)

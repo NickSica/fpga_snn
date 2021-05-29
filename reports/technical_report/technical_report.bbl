@@ -70,12 +70,9 @@ J.~Rodriguez, ``How much will a sleep study cost me?'' Dec 2016. [Online].
   \url{https://www.sleepdr.com/the-sleep-blog/how-much-will-a-sleep-study-cost-me/}
 \BIBentrySTDinterwordspacing
 
-\bibitem{physiobank}
-A.~L. Goldberger, L.~A. Amaral, L.~Glass, J.~M. Hausdorff, P.~C. Ivanov, R.~G.
-  Mark, J.~E. Mietus, G.~B. Moody, C.~K. Peng, and H.~E. Stanley,
-  ``\BIBforeignlanguage{eng}{Physiobank, physiotoolkit, and physionet:
-  components of a new research resource for complex physiologic signals},''
-  \emph{\BIBforeignlanguage{eng}{Circulation (New York, N.Y.)}}, vol. 101,
-  no.~23, pp. E215--E220, 2000.
+\bibitem{penzel}
+T.~Penzel, G.~Moody, R.~Mark, A.~Goldberger, and J.~Peter,
+  ``\BIBforeignlanguage{eng}{Apnea-ecg database},'' in
+  \emph{\BIBforeignlanguage{eng}{COMPUT CARDIOL}}, 2000, pp. 255--258.
 
 \end{thebibliography}
