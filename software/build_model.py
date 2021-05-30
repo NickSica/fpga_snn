@@ -30,7 +30,7 @@ event_id = {'A': 1,
 def define_model():
     model = Sequential()
     model.add(Dense(num_neurons, activation="relu"))
-    model.compile(loss='categorical_crossentropy', optimizer=optimizers.Nadam(), metrics=['accuracy'])
+    model.compile(loss='binary_crossentropy', optimizer="adam", metrics=['accuracy'])
     return model
 
 def load_data(data_name):
@@ -52,14 +52,22 @@ if __name__ == "__main__":
     load_data("a01")
     define_tests("a02")
 
-    _,_,SxxTrain = stft(raw_train.get_data(), nperseg=12125)
+    train_data = raw_train.get_data()
+    test_data = raw_test.get_data()
+    train_data = np.nan_to_num(train_data)
+    test_data = np.nan_to_num(test_data)
+    SxxTrain = np.ndarray(shape=(6063,489))
+    _,_,SxxTrain[:] = stft(raw_train.get_data(), nperseg=12125)
     _,_,SxxTest = stft(raw_test.get_data(), nperseg=12100)
 
     y_test = np.array([[1] if anno == "A" else [0] for anno in annot_test.description])
     y_test = to_categorical(y_test, num_classes=4)
 
+    SxxTrain.resize(2958939)
     sTest = SxxTest.reshape(1, 528, 6051)
+    sTrain  = SxxTrain.reshape(1, 489, 6051)
 
+    np.savez_compressed(os.path.join(dataDir, "x_norm.npz"), sTrain[0])
     np.savez_compressed(os.path.join(dataDir, "x_test.npz"), sTest[0])
     np.savez_compressed(os.path.join(dataDir, "y_test.npz"), y_test)
 
@@ -72,4 +80,6 @@ if __name__ == "__main__":
         if not os.path.isdir(dataDir):
             os.mkdir(outputDir)
         model.save(os.path.join(dataDir, "model", "model.h5"), save_format='h5')
-        model.save_weights(os.path.join(dataDir, "model", "model_weights.h5"), save_format='h5')
+        model_json = model.to_json()
+        with open(os.path.join(dataDir, "model", "model.json"), "w") as model_file:
+            model_file.write(model_json)
