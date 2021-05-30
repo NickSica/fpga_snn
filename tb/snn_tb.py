@@ -1,14 +1,10 @@
 import configparser
 
 import cocotb
-from cocotb.triggers import Timer
 from cocotb.triggers import FallingEdge
 from cocotb.triggers import RisingEdge
 from cocotb.clock import Clock
 
-import snntoolbox
-from snntoolbox.simulation.target_simulators.INI_temporal_mean_rate_target_sim import SNN
-from snntoolbox.simulation import utils
 from snntoolbox.bin.run import main
 import pickle
 import h5py
@@ -33,31 +29,26 @@ async def test(dut):
     config = configparser.ConfigParser()
     config.read("tb/snn_toolbox.ini")
 
-    #snn = SNN(config)
-    #snn.compile()
-    #dut._log.info(snn.get_weights())
-    #main("tb/snn_toolbox.ini")
+    main("tb/snn_toolbox.ini")
 
-    #h5_file = config["paths"]["filename_ann"] + "_weights.h5"
-    weights = [1, 1, 0, -1]
-    #with h5py.File(h5_file, 'r') as h5:
-    #    print(dict(h5))
-    #    print(list(h5["dense"]["dense"]["kernel:0"]))
-    #    print(dict(h5["model_weights"]))
-    #    print(dict(h5["model_weights"]["dense"]))
-    #    print(dict(h5["model_weights"]["dense"]["dense"]))
-    #    print(dict(h5["optimizer_weights"]))
-    #    print(dict(h5["optimizer_weights"]["Nadam"]))
-    #    print(dict(h5["optimizer_weights"]["Nadam"]["dense"]))
-    #    print(dict(h5["model_weights"]["06Dense_10"]))
-    #    print(list(h5["model_weights"]["0Dense_4"]["v_mem:0"]))
-    #    print(dict(h5["model_weights"]["0Dense_4"]["0Dense_4"]))
-
-    #    for key in h5["model_weights"].keys():
-    #        if key != "input_1":
-    #            model_mem = h5["model_weights"][key]["v_mem:0"]
-    #            for i in range(0, model_mem.shape[1]):
-    #                weights.append(int(model_mem[0][i]))
+    h5_file = config["paths"]["filename_ann"] + "_INI.h5"
+    #weights = [1, 1, 0, -1]
+    weights = []
+    with h5py.File(h5_file, 'r') as h5:
+        #print(dict(h5))
+        #print(dict(h5["model_weights"]))
+        #print(dict(h5["model_weights"]["input_1"]))
+        #print(list(h5["model_weights"]["0Dense_4"]))
+        #print(dict(h5["model_weights"]["0Dense_4"]["0Dense_4"]))
+        #print(list(h5["model_weights"]["0Dense_4"]["0Dense_4"]["bias:0"]))
+        #print(h5["model_weights"]["0Dense_4"]["v_thresh:0"])
+        for weight in h5["model_weights"]["0Dense_4"]["0Dense_4"]["bias:0"]:
+            round_weight = round(weight)
+            if round_weight > 1:
+               round_weight = 1
+            elif round_weight < -1:
+                round_weight = -1
+            weights.append(int(round_weight))
 
     dut._log.info("Weights: " + str(weights))
     dut._log.info("Parameters:")
