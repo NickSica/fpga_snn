@@ -1,31 +1,21 @@
 #!/usr/bin/python3
-from tensorflow.keras.layers import Dense, Input, Conv1D, BatchNormalization, ReLU, GlobalAveragePooling1D
+from tensorflow.keras.layers import Dense
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.utils import to_categorical
-from tensorflow.keras import optimizers
 from scipy.signal import stft
+from sklearn.metrics import confusion_matrix
 import numpy as np
 import os
 import mne
-import csv
+import matplotlib.pyplot as plt
 np.random.seed(5)
 
 save_model = True
 plot_on = False
-spike_thresh = 0.8
-input_segment_length = 6000
 num_neurons = 4
-value_for_over_thresh = 1
-value_for_under_thresh = 0
-max_patients = 4
 baseDir = os.getcwd()
 dataDir = os.path.join(baseDir, "data")
 outputDir = os.path.join(baseDir, "model")
-testRecordFile = os.path.join(dataDir, "TestRecords.csv")
-trainRecordFile = os.path.join(dataDir, "TrainRecords.csv")
-event_id = {'A': 1,
-            'N': 0}
 
 def define_model():
     model = Sequential()
@@ -75,6 +65,11 @@ if __name__ == "__main__":
     y_pred_nn = model.predict(sTest[0])
     label_train_pred = [pred.argmax() for pred in y_pred_nn]
     print(model.summary())
+
+    if plot_on:
+        cm = confusion_matrix(y_test, label_train_pred)
+        plt.matshow(cm, cmap=plt.cm.gray)
+        plt.show()
 
     if save_model:
         if not os.path.isdir(dataDir):
