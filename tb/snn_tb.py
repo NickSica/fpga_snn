@@ -5,7 +5,6 @@ from cocotb.triggers import FallingEdge
 from cocotb.triggers import RisingEdge
 from cocotb.clock import Clock
 
-from snntoolbox.bin.run import main
 import pickle
 import h5py
 import numpy as np
@@ -29,19 +28,9 @@ async def test(dut):
     config = configparser.ConfigParser()
     config.read("tb/snn_toolbox.ini")
 
-    main("tb/snn_toolbox.ini")
-
     h5_file = config["paths"]["filename_ann"] + "_INI.h5"
-    #weights = [1, 1, 0, -1]
     weights = []
     with h5py.File(h5_file, 'r') as h5:
-        #print(dict(h5))
-        #print(dict(h5["model_weights"]))
-        #print(dict(h5["model_weights"]["input_1"]))
-        #print(list(h5["model_weights"]["0Dense_4"]))
-        #print(dict(h5["model_weights"]["0Dense_4"]["0Dense_4"]))
-        #print(list(h5["model_weights"]["0Dense_4"]["0Dense_4"]["bias:0"]))
-        #print(h5["model_weights"]["0Dense_4"]["v_thresh:0"])
         for weight in h5["model_weights"]["0Dense_4"]["0Dense_4"]["bias:0"]:
             round_weight = round(weight)
             if round_weight > 1:

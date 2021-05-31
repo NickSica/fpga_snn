@@ -3,16 +3,20 @@ import os
 import subprocess
 
 import h5py
+from snntoolbox.bin.run import main
 
 def setup():
     config = configparser.ConfigParser()
     config.read("tb/snn_toolbox.ini")
 
-    h5_file = config["paths"]["filename_ann"] + "_snn" + ".h5"
-    h5 = h5py.File(h5_file, 'r')
+    main("tb/snn_toolbox.ini")
+
+    h5_file = config["paths"]["filename_ann"] + "_INI.h5"
+    v_thresh = 0
+    with h5py.File(h5_file, 'r') as h5:
+        v_thresh = h5["model_weights"]["0Dense_4"]["v_thresh:0"].shape
 
     # Takes the first threshold and runs with it
-    v_thresh = h5["model_weights"]["0Dense_2"]["v_thresh:0"].shape
     param_str = ""
     if not v_thresh:
         param_str = " -Psnn.THRESHOLD=5"
