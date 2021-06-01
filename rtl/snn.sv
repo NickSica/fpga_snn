@@ -1,11 +1,11 @@
 `timescale 1ns/1ps
 
 module snn
-	#(parameter NUM_NODES = 1,
+	#(parameter NUM_NODES = 4,
 	  parameter CLK_DIV = 1200000,
 	  parameter DEFAULT_UTHR = 1,
 	  parameter DEFAULT_LTHR = 0,
-	  parameter THRESHOLD = 0)
+	  parameter THRESHOLD = 5)
 	(input  logic clk_i,
 	 input  logic rst_i,
 	 input  logic [31:0] ecg_i,

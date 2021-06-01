@@ -1,12 +1,12 @@
 module neuron
-	#(parameter integer THRESHOLD = 0)
+	#(parameter THRESHOLD = 5)
 	(input  logic clk_i,
 	 input  logic rst_i,
 	 input  logic [1:0] syn_i,
 	 input  logic axon_i,
 	 output logic spike_o);
 
-	localparam NUM_BITS_DENDRITE = $rtoi($ceil($clog2(THRESHOLD))) - 1;
+	localparam NUM_BITS_DENDRITE = $rtoi($ceil($clog2(THRESHOLD)));
 	logic [1:0] synapse_r;
 	logic [1:0] syn_out_c;
 	logic signed [NUM_BITS_DENDRITE:0] dendrite_r;

@@ -15,7 +15,7 @@ include tb/tb.mk
 
 .PHONY: all
 
-build:
+build: clean
 	$(vivado) $(script) -tclargs -partNum $(partNum) \
 								 -outDir $(outDir) \
 								 -top $(top) \
