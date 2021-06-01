@@ -48,4 +48,5 @@ clean::
 	-rm vivado*
 	-rm webtalk*
 	-rm x*
+	-rm .Xil
 	-rm -r logs
