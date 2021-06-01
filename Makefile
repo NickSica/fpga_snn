@@ -13,7 +13,7 @@ VLOG_SRC_FILES :=
 include rtl/rtl.mk
 include tb/tb.mk
 
-.PHONY: all
+.PHONY: all software
 
 build: clean
 	$(vivado) $(script) -tclargs -partNum $(partNum) \
@@ -26,6 +26,10 @@ build: clean
 # Include cocotb's make rules to help with sim setup
 cocotb: clean_cocotb
 	python tb/run_cocotb.py
+
+software:
+	python software/convert_data.py
+	python software/build_model.py
 
 test: clean_cocotb
 	vlog -sv $(VLOG_SRC_FILES)
