@@ -1,0 +1,3 @@
+[submodule "fpga_build_scripts"]
+	path = fpga_build_scripts
+	url = https://github.com/NickSica/fpga_build_scripts

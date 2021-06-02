@@ -12,10 +12,13 @@ headDir = os.path.join(outputDir, "head")
 testFile = os.path.join(headDir,"test.csv")
 trainFile = os.path.join(headDir,"train.csv")
 
-def convert_data():
-    trainData = pd.read_csv(trainFile)
+def convert_data(csv_file, output_name, last_record):
+    trainData = pd.read_csv(csv_file)
     patients = pd.DataFrame(columns=trainData.columns)
     for i,row in trainData.iterrows():
+        if last_record != "" and row['Record'] == last_record:
+            break
+
         try:
             recordname = os.path.join(rawDir, row['Record'])
             train0Head = wfdb.rdrecord(recordname)
@@ -32,7 +35,8 @@ def convert_data():
         except:
             continue
 
-    patients.to_csv(os.path.join(outputDir, "Records.csv"),index=False)
+    patients.to_csv(os.path.join(outputDir, output_name+".csv"),index=False)
 
 if __name__ == "__main__":
-    convert_data()
+    convert_data(trainFile, "TrainRecords", "a03")
+    convert_data(testFile, "TestRecords", "a03")
